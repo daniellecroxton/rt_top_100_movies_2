@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require_relative "../lib/rt_top_100_movies_cli_app"
+
+RtTop100MoviesCliApp::CLI.new.call
