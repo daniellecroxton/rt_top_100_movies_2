@@ -11,13 +11,16 @@ class RtTop100MoviesCliApp::CLI
   end
 
   def create_movies
-    movies_hash = RtTop100MoviesCliApp::Scraper.scrape_top_100("https://www.rottentomatoes.com/top/bestofrt")
+    movies_array = RtTop100MoviesCliApp::Scraper.scrape_top_100("http://www.imdb.com/list/ls055592025/")
+    movies_array.each do | movies_hash |
     RtTop100MoviesCliApp::Movie.create_from_collection(movies_hash)
+    end
   end
 
   def add_movie_details
     RtTop100MoviesCliApp::Movie.all.each do | movie |
-      details_hash = RtTop100MoviesCliApp::Scraper.scrape_movie("https://www.rottentomatoes.com/top/bestofrt" + movie.movie_url)
+      # binding.pry
+      details_hash = RtTop100MoviesCliApp::Scraper.scrape_movie("https://www.rottentomatoes.com#{movie.movie_url}")
       movie.add_details(details_hash)
     end
   end
@@ -35,7 +38,12 @@ class RtTop100MoviesCliApp::CLI
 
     selected_movie = RtTop100MoviesCliApp::Movie.all[input-1]
 
-    display_movie_details(selected_movie)
+    if input>=1 && input<=100
+      display_movie_details(selected_movie)
+    else
+      puts "I'm not quite sure what you meant."
+      start
+    end
 
     puts ""
     puts "Would you like to see more movies? Y/N"
@@ -81,7 +89,6 @@ class RtTop100MoviesCliApp::CLI
   end
 
   def display_movie_details(input)
-    if input>=1 && input<=100
       puts ""
       puts "********* Best of Rotten Tomatoes: #{movie.title} *********"
       puts ""
@@ -97,10 +104,6 @@ class RtTop100MoviesCliApp::CLI
       puts "Directed by: #{movie.director}"
       puts "Synopsis: #{movie.synopsis}"
       puts ""
-    else
-      puts "I'm not quite sure what you meant."
-      start
-    end
   end
 
 end
