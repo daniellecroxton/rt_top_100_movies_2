@@ -1,8 +1,6 @@
 # RtTop100MoviesCliApp
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rt_top_100_movies_cli_app`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This gem explores Rotten Tomatoes' Top 100 Movies of All Time list. You can view the list in increments of 25, see more details about a movie, and view the methodology behind the list. Who knows? Maybe you'll even find a new movie to watch this weekend. Happy viewing!
 
 ## Installation
 

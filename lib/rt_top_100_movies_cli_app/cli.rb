@@ -6,7 +6,6 @@ class RtTop100MoviesCliApp::CLI
     puts ""
     puts "Welcome cinephile! Which of Rotten Tomatoes' Top 100 Movies would you like to see?"
     create_movies
-    # add_movie_details
     start
   end
 
@@ -16,14 +15,6 @@ class RtTop100MoviesCliApp::CLI
     RtTop100MoviesCliApp::Movie.create_from_collection(movies_hash)
     end
   end
-
-  # def add_movie_details
-  #   RtTop100MoviesCliApp::Movie.all.each do | movie |
-  #     # binding.pry
-  #     details_hash = RtTop100MoviesCliApp::Scraper.scrape_movie("https://www.rottentomatoes.com#{movie.movie_url}")
-  #     movie.add_details(details_hash)
-  #   end
-  # end
 
   def start
     puts ""
@@ -37,7 +28,6 @@ class RtTop100MoviesCliApp::CLI
     input = gets.to_i
 
     @selected_movie = RtTop100MoviesCliApp::Movie.all[input-1]
-    # binding.pry
 
     if input>=1 && input<=100
       add_movie_details(@selected_movie)
@@ -109,6 +99,7 @@ class RtTop100MoviesCliApp::CLI
       puts "Genre: #{@selected_movie.genre}"
       puts "Released: #{@selected_movie.release_date}"
       puts "Directed by: #{@selected_movie.director}"
+      puts ""
       puts "Synopsis: #{@selected_movie.synopsis}"
       puts ""
   end
