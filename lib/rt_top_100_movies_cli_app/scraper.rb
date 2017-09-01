@@ -7,7 +7,7 @@ class RtTop100MoviesCliApp::Scraper
       movies = []
       top_100_page.css("div.panel-body.content_body.allow-overflow table.table").each do | box |
         box.css('a.unstyled.articleLink').each do |movie|
-          movie_title = movie.text
+          movie_title = movie.text.strip
           movie_url = movie.attr('href')
           movies << {title: movie_title, movie_url: movie_url}
         end
@@ -18,6 +18,7 @@ class RtTop100MoviesCliApp::Scraper
   def self.scrape_movie(details_url)
     movie_details = {}
     details_page = Nokogiri::HTML(open(details_url))
+
     details_page.css('#mainColumn').each do | detail |
       # binding.pry
 

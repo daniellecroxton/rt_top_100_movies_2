@@ -18,6 +18,7 @@ class RtTop100MoviesCliApp::CLI
   end
 
   def add_movie_details
+
     RtTop100MoviesCliApp::Movie.all.each do | movie |
       # binding.pry
       details_hash = RtTop100MoviesCliApp::Scraper.scrape_movie("https://www.rottentomatoes.com#{movie.movie_url}")
