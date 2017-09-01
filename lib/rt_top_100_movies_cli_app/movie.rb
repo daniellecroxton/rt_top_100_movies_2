@@ -21,7 +21,7 @@ class RtTop100MoviesCliApp::Movie
     details_hash.each do | attr, value |
       self.send("#{attr}=", value)
     end
-    @@all << self
+    self
   end
 
   def self.all

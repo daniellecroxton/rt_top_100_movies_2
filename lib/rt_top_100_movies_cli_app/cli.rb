@@ -18,7 +18,6 @@ class RtTop100MoviesCliApp::CLI
   end
 
   def add_movie_details
-
     RtTop100MoviesCliApp::Movie.all.each do | movie |
       # binding.pry
       details_hash = RtTop100MoviesCliApp::Scraper.scrape_movie("https://www.rottentomatoes.com#{movie.movie_url}")
@@ -37,7 +36,7 @@ class RtTop100MoviesCliApp::CLI
     puts "To learn more about a specific movie, please enter the movie's rank:"
     input = gets.to_i
 
-    selected_movie = RtTop100MoviesCliApp::Movie.all[input-1]
+    @selected_movie = RtTop100MoviesCliApp::Movie.all[input-1]
 
     if input>=1 && input<=100
       display_movie_details(selected_movie)
@@ -91,19 +90,19 @@ class RtTop100MoviesCliApp::CLI
 
   def display_movie_details(input)
       puts ""
-      puts "********* Best of Rotten Tomatoes: #{movie.title} *********"
+      puts "********* Best of Rotten Tomatoes: #{@selected_movie[:title]} *********"
       puts ""
-      puts "Title:  #{movie.title}"
+      puts "Title:  #{@selected_movie[:title]}"
       puts ""
-      puts "Tomatometer Score: #{movie.tomatometer_score}"
-      puts "Audience Score: #{movie.audience_score}"
-      puts "Critic Consensus: #{movie.critic_consensus}"
+      puts "Tomatometer Score: #{@selected_movie[:tomatometer_score]}"
+      puts "Audience Score: #{@selected_movie[:audience_score]}"
+      puts "Critic Consensus: #{@selected_movie[:critic_consensus]}"
       puts ""
-      puts "Rated: #{movie.rating}"
-      puts "Genre: #{movie.genre}"
-      puts "Released: #{movie.release_date}"
-      puts "Directed by: #{movie.director}"
-      puts "Synopsis: #{movie.synopsis}"
+      puts "Rated: #{@selected_movie[:rating]}"
+      puts "Genre: #{@selected_movie[:genre]}"
+      puts "Released: #{@selected_movie[:release_date]}"
+      puts "Directed by: #{@selected_movie[:director]}"
+      puts "Synopsis: #{@selected_movie[:synopsis]}"
       puts ""
   end
 
