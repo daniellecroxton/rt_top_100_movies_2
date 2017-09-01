@@ -11,7 +11,7 @@ class RtTop100MoviesCliApp::CLI
   end
 
   def create_movies
-    movies_array = RtTop100MoviesCliApp::Scraper.scrape_top_100("http://www.imdb.com/list/ls055592025/")
+    movies_array = RtTop100MoviesCliApp::Scraper.scrape_top_100("https://www.rottentomatoes.com/top/bestofrt/")
     movies_array.each do | movies_hash |
     RtTop100MoviesCliApp::Movie.create_from_collection(movies_hash)
     end
