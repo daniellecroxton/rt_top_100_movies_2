@@ -4,17 +4,11 @@ class RtTop100MoviesCliApp::Movie
 
   @@all = []
 
-  def initialize
-    @title = title
-    @movie_url = movie_url
-    @@all << self
-  end
-
-  def self.create_from_collection(movies_hash)
-    movie = self.new
+  def initialize(movies_hash)
     movies_hash.each do | attr, value |
-      movie.send("#{attr}=", value)
+      self.send("#{attr}=", value)
     end
+    @@all << self
   end
 
   def add_details(details_hash)
@@ -26,6 +20,12 @@ class RtTop100MoviesCliApp::Movie
 
   def self.all
     @@all
+  end
+
+  def self.movies_release_after(year)
+    @@all.select { | movie | movie.title[-5..-2].to_i >= year }
+    end
+
   end
 
 end

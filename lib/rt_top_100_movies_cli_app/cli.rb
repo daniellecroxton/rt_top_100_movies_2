@@ -10,10 +10,8 @@ class RtTop100MoviesCliApp::CLI
   end
 
   def create_movies
-    movies_array = RtTop100MoviesCliApp::Scraper.scrape_top_100("https://www.rottentomatoes.com/top/bestofrt/")
-    movies_array.each do | movies_hash |
-    RtTop100MoviesCliApp::Movie.create_from_collection(movies_hash)
-    end
+    RtTop100MoviesCliApp::Scraper.scrape_top_100("https://www.rottentomatoes.com/top/bestofrt/")
+    binding.pry
   end
 
   def start
@@ -27,11 +25,11 @@ class RtTop100MoviesCliApp::CLI
     puts "To learn more about a specific movie, please enter the movie's rank:"
     input = gets.to_i
 
-    @selected_movie = RtTop100MoviesCliApp::Movie.all[input-1]
 
-    if input>=1 && input<=100
-      add_movie_details(@selected_movie)
-      display_movie_details(@selected_movie)
+    if input.between?(1,100)
+      selected_movie = RtTop100MoviesCliApp::Movie.all[input-1]
+      add_movie_details(selected_movie)
+      display_movie_details(selected_movie)
     else
       puts "I'm not quite sure what you meant."
       start
@@ -81,26 +79,26 @@ class RtTop100MoviesCliApp::CLI
   end
 
   def add_movie_details(selected_movie)
-      details_hash = RtTop100MoviesCliApp::Scraper.scrape_movie("https://www.rottentomatoes.com#{@selected_movie.movie_url}")
-      @selected_movie.add_details(details_hash)
+      details_hash = RtTop100MoviesCliApp::Scraper.scrape_movie("https://www.rottentomatoes.com#{selected_movie.movie_url}")
+      selected_movie.add_details(details_hash)
   end
 
-  def display_movie_details(input)
+  def display_movie_details(selected_movie)
       puts ""
-      puts "********* Best of Rotten Tomatoes: #{@selected_movie.title} *********"
+      puts "********* Best of Rotten Tomatoes: #{selected_movie.title} *********"
       puts ""
-      puts "Title:  #{@selected_movie.title}"
+      puts "Title:  #{selected_movie.title}"
       puts ""
-      puts "Tomatometer Score: #{@selected_movie.tomatometer_score}"
-      puts "Audience Score: #{@selected_movie.audience_score}"
-      puts "Critic Consensus: #{@selected_movie.critic_consensus}"
+      puts "Tomatometer Score: #{selected_movie.tomatometer_score}"
+      puts "Audience Score: #{selected_movie.audience_score}"
+      puts "Critic Consensus: #{selected_movie.critic_consensus}"
       puts ""
-      puts "Rated: #{@selected_movie.rating}"
-      puts "Genre: #{@selected_movie.genre}"
-      puts "Released: #{@selected_movie.release_date}"
-      puts "Directed by: #{@selected_movie.director}"
+      puts "Rated: #{selected_movie.rating}"
+      puts "Genre: #{selected_movie.genre}"
+      puts "Released: #{selected_movie.release_date}"
+      puts "Directed by: #{selected_movie.director}"
       puts ""
-      puts "Synopsis: #{@selected_movie.synopsis}"
+      puts "Synopsis: #{selected_movie.synopsis}"
       puts ""
   end
 
