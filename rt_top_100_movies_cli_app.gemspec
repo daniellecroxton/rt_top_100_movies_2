@@ -11,17 +11,17 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Top 100 Movies of All Time from Rotten Tomatoes}
   spec.description   = %q{View and learn more about Rotten Tomatoes Top 100 Movies of All Time}
-  spec.homepage      = "https://github.com/daniellecroxton/top-100-movies-cli-app"
+  spec.homepage      = "https://github.com/daniellecroxton/rt_top_100_movies_2"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
-  if spec.respond_to?(:metadata)
-    spec.metadata['http://rubygems.org']
-  else
-    raise "RubyGems 2.0 or newer is required to protect against " \
-      "public gem pushes."
-  end
+  # if spec.respond_to?(:metadata)
+  #   spec.metadata['http://rubygems.org']
+  # else
+  #   raise "RubyGems 2.0 or newer is required to protect against " \
+  #     "public gem pushes."
+  # end
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
