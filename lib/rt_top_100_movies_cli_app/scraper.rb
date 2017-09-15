@@ -13,13 +13,7 @@ class RtTop100MoviesCliApp::Scraper
           RtTop100MoviesCliApp::Movie.new({title: movie_title, movie_url: movie_url})
         end
       end
-
     end
-
-  def self.scrape_release_date(movie)
-    doc = Nokogiri::HTML(open("https://www.rottentomatoes.com#{movie.movie_url}"))
-    movie.release_date = doc.css("div.panel-body ul.content-meta li .meta-value")[4].text.strip.split.join(" ")
-  end
 
   def self.scrape_movie(details_url)
     movie_details = {}
@@ -31,7 +25,7 @@ class RtTop100MoviesCliApp::Scraper
       movie_details[:critic_consensus] = detail.css(".critic_consensus.tomato-info.noSpacing.superPageFontColor").text.gsub("Critic Consensus:", "").split.join(" ")
       movie_details[:synopsis] = detail.css("#movieSynopsis").text.strip
       movie_details[:rating] = detail.css("div.panel-body ul.content-meta li .meta-value").first.text.strip
-      #movie_details[:release_date] = detail.css("div.panel-body ul.content-meta li .meta-value")[4].text.strip.split.join(" ")
+      movie_details[:release_date] = detail.css("div.panel-body ul.content-meta li .meta-value")[4].text.strip.split.join(" ")
       movie_details[:genre] = detail.css("div.panel-body ul.content-meta li .meta-value")[1].text.strip.split.join(" ")
       movie_details[:director] = detail.css("div.panel-body ul.content-meta li .meta-value")[2].text.strip
     end

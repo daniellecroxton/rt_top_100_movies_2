@@ -23,9 +23,12 @@ class RtTop100MoviesCliApp::Movie
   end
 
   def self.movies_release_after(year)
-    @@all.select { | movie | movie.title[-5..-2].to_i >= year }
+    released_movies = @@all.each.with_index do | movie, rank |
+      if movie.title[-5..-2].to_i >= year
+      puts "#{rank+1}. #{movie.title}"
+      end
     end
-
+    released_movies
   end
 
 end

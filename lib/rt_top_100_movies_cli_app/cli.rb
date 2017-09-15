@@ -11,25 +11,33 @@ class RtTop100MoviesCliApp::CLI
 
   def create_movies
     RtTop100MoviesCliApp::Scraper.scrape_top_100("https://www.rottentomatoes.com/top/bestofrt/")
-    binding.pry
   end
 
   def start
     puts ""
-    puts "Please enter '1-25', '26-50', '51-75', '76-100', 'methodology', or 'exit':"
+    puts "Please select from the following options:"
+    puts "To see the top 100 movies, enter '1-25', '26-50', '51-75', or '76-100'"
+    puts "To see all the movies on the list released after a given year (starting in 1920), enter the year"
+    puts "To see the methodology behind the list, enter 'methodology'"
+    puts "To exit the program, enter 'exit'"
+    puts ""
     input = gets.strip.downcase
 
     display_movies(input)
 
     puts ""
-    puts "To learn more about a specific movie, please enter the movie's rank:"
-    input = gets.to_i
+    puts "To learn more about a specific movie, please enter the movie's rank. You can also enter 'main' to return to the main menu or 'exit' to exit the program."
+    input = gets.strip.downcase
 
 
-    if input.between?(1,100)
-      selected_movie = RtTop100MoviesCliApp::Movie.all[input-1]
+    if input.to_i.between?(1,100)
+      selected_movie = RtTop100MoviesCliApp::Movie.all[input.to_i-1]
       add_movie_details(selected_movie)
       display_movie_details(selected_movie)
+    elsif input == "main"
+      start
+    elsif input == "exit"
+      exit
     else
       puts "I'm not quite sure what you meant."
       start
@@ -63,10 +71,17 @@ class RtTop100MoviesCliApp::CLI
         RtTop100MoviesCliApp::Movie.all[list_from-1, 25].each.with_index(list_from) do | movie, rank |
           puts "#{rank}. #{movie.title}"
         end
+      elsif input.to_i.between?(1920, Date.today.year)
+        puts ""
+        puts "********* Best of Rotten Tomatoes: TOP MOVIES RELEASED IN OR AFTER #{input} *********"
+        puts ""
+        year = input.to_i
+        RtTop100MoviesCliApp::Movie.movies_release_after(year)
       elsif input == "methodology"
         puts ""
         puts "Methodology: Each critic from Rotten Tomatoes' discrete list gets one vote, weighted equally. A movie must have 40 or more rated reviews to be considered. The 'Adjusted Score' comes from a weighted formula (Bayesian) that we use that accounts for variation in the number of reviews per movie."
         puts ""
+        start
       elsif input == "exit"
         puts ""
         puts "The End. Thank you!"
